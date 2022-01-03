@@ -15,4 +15,9 @@ public class MobileInteract : MonoBehaviour {
                 Application.Quit();
         }
     }
+
+    // 어플리케이션 종료
+    public void QuitApplication() {
+        Application.Quit();
+    }
 }
