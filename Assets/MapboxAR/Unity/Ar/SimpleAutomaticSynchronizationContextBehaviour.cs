@@ -32,7 +32,7 @@ namespace Mapbox.Unity.Ar
 		float _minimumDeltaDistance = 2f;
 
 		[SerializeField]
-		float _minimumDesiredAccuracy = 5f;
+		float _minimumDesiredAccuracy = 20f;
 
 		SimpleAutomaticSynchronizationContext _synchronizationContext;
 
