@@ -16,7 +16,7 @@ public class ScreenBehavior : MonoBehaviour
         
     }
 
-    public void QuitApplication() {
+    public static void QuitApplication() {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
