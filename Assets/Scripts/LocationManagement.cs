@@ -23,13 +23,13 @@ public class LocationManagement : MonoBehaviour
 
         // 만약 대기 시간이 내에 시작되지 못했다면 종료
         if(maxWait <= 0) {
-            print("Time Out: " + Input.location.status);
+            Debug.Log("Time Out: " + Input.location.status);
             yield break;
         }
 
         // 만약 대기 시간 내에 시작되었으나, 실패한 경우에도 종료
         if(Input.location.status == LocationServiceStatus.Failed) {
-            print("Unable to determine device location");
+            Debug.Log("Unable to determine device location");
             yield break;
         }
 
