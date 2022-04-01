@@ -8,7 +8,7 @@ public class TextPopup : MonoBehaviour {
     public GameObject parentObject = null;
     public string resultText = null;
 
-    private float dueTime = 3f;
+    private float dueTime = 2f;
     private float destroyTIme = 1f;
 
     private Text popupText = null;
@@ -18,7 +18,7 @@ public class TextPopup : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        dueTime = 3f;
+        dueTime = 2f;
         destroyTIme = 1f;
 
         popupText = this.GetComponent<Text>();
@@ -37,10 +37,11 @@ public class TextPopup : MonoBehaviour {
         else {
             destroyTIme -= Time.deltaTime;
             color.w = 125 * destroyTIme;
+            panelImge.color = color;
         }
 
         if(destroyTIme <= 0f) {
-            Destroy(this.gameObject);
+            Destroy(this.parentObject.transform);
         }
     }
 }
