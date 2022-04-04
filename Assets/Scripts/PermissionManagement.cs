@@ -21,7 +21,11 @@ public class PermissionManagement : MonoBehaviour {
         }
 
         // Permission denied message
-        if(!(Permission.HasUserAuthorizedPermission(Permission.Camera) && Permission.HasUserAuthorizedPermission(Permission.FineLocation)) || true) {
+#if UNITY_EDITOR
+        if(true) {
+#else
+        if(!(Permission.HasUserAuthorizedPermission(Permission.Camera) && Permission.HasUserAuthorizedPermission(Permission.FineLocation))) {
+#endif
             GameObject popup = Instantiate(popupPrefab, canvas.transform);
             // get the first child of popup panel
             popup.transform.GetChild(0).GetComponent<TextPopup>().resultText = "Permission Denied";
