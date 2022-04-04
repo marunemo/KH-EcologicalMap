@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class TextPopup : MonoBehaviour {
 
-    public GameObject parentObject = null;
     public string resultText = null;
 
     private float dueTime = 2f;
@@ -14,8 +13,6 @@ public class TextPopup : MonoBehaviour {
     private Text popupText = null;
     private Image panelImge = null;
 
-    private Vector4 color;
-
     // Start is called before the first frame update
     void Start() {
         dueTime = 2f;
@@ -23,10 +20,10 @@ public class TextPopup : MonoBehaviour {
 
         popupText = this.GetComponent<Text>();
         popupText.text = resultText;
+        popupText.color = new Color32(50, 50, 50, 255);
 
-        panelImge = parentObject.GetComponent<Image>();
-        panelImge.color = new Vector4(255, 255, 255, 125);
-        color = panelImge.color;
+        panelImge = GetComponentInParent<Image>();
+        panelImge.color = new Color32(255, 255, 255, 125);
     }
 
     // Update is called once per frame
@@ -36,12 +33,12 @@ public class TextPopup : MonoBehaviour {
         }
         else {
             destroyTIme -= Time.deltaTime;
-            color.w = 125 * destroyTIme;
-            panelImge.color = color;
+            popupText.color = new Color32(50, 50, 50, (byte)(255 * destroyTIme));
+            panelImge.color = new Color32(255, 255, 255, (byte)(125 * destroyTIme));
         }
 
         if(destroyTIme <= 0f) {
-            Destroy(this.parentObject.transform);
+            Destroy(this.transform.parent.gameObject);
         }
     }
 }
