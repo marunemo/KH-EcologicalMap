@@ -70,7 +70,7 @@ public class LocationManagement : MonoBehaviour {
         }
     }
 
-    public static float getDistance(float lat, float lng) {
+    public float getLocationDistance(float lat, float lng) {
         // Haversine formula
         // [ref] https://en.wikipedia.org/wiki/Haversine_formula
         float earthRadius = 6371f;
