@@ -51,6 +51,7 @@ public class LocationManagement : MonoBehaviour {
                 "<b>Latitude</b> : {0:F6}\n<b>Longitude</b> : {1:F6}",
                 Input.location.lastData.latitude, Input.location.lastData.longitude
             );
+
             /*
             Debug.Log("Location: " + Input.location.lastData.latitude +
                 " " + Input.location.lastData.longitude +
@@ -67,5 +68,26 @@ public class LocationManagement : MonoBehaviour {
         if(gpsStarted) {
             Input.location.Stop();
         }
+    }
+
+    public static float getDistance(float lat, float lng) {
+        // Haversine formula
+        // [ref] https://en.wikipedia.org/wiki/Haversine_formula
+        float earthRadius = 6371f;
+
+        float lat1 = Input.location.lastData.latitude * Mathf.Deg2Rad;
+        float lng1 = Input.location.lastData.longitude * Mathf.Deg2Rad;
+
+        float lat2 = lat * Mathf.Deg2Rad;
+        float lng2 = lng * Mathf.Deg2Rad;
+
+        float deltaLat = lat2 - lat1;
+        float deltaLng = lng2 - lng1;
+
+        float hav = Mathf.Sin(deltaLat / 2) * Mathf.Sin(deltaLat / 2)
+            + Mathf.Cos(lat1) * Mathf.Cos(lat2) * Mathf.Sin(deltaLng / 2) * Mathf.Sin(deltaLng / 2);
+        float dist = 2 * earthRadius * Mathf.Atan2(Mathf.Sqrt(hav), Mathf.Sqrt(1 - hav));
+
+        return dist;
     }
 }
