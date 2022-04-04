@@ -47,9 +47,10 @@ public class LocationManagement : MonoBehaviour {
     void Update() {
         // gps 기능이 시작되었따면, 위도, 경도, 고도, 정확도, 정보를 얻은 시간을 각각 출력
         if(gpsStarted) {
-            LocationText.GetComponent<Text>().text = "" +
-                "<b>Latitude</b> : " + Input.location.lastData.latitude +
-                "<b>Longitude</b> : " + Input.location.lastData.longitude;
+            LocationText.GetComponent<Text>().text = string.Format(
+                "<b>Latitude</b> : {0:F6}\n<b>Longitude</b> : {0:F6}",
+                Input.location.lastData.latitude, Input.location.lastData.longitude
+            );
             /*
             Debug.Log("Location: " + Input.location.lastData.latitude +
                 " " + Input.location.lastData.longitude +
