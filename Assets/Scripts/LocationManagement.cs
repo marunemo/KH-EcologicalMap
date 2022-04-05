@@ -62,9 +62,6 @@ public class LocationManagement : MonoBehaviour {
                 " " + Input.location.lastData.horizontalAccuracy +
                 " " + Input.location.lastData.timestamp);
             */
-
-            // 위도 경도 각각 1도당 111km이므로, 약 1m 당 0.00001도가 된다.
-            Camera.main.transform.position = getRelativePosition(0, 0, currLatitude, currLongitude) * 10000;
         }
     }
 
@@ -103,6 +100,40 @@ public class LocationManagement : MonoBehaviour {
         float xPos = getLocationDistance(0, destLng, 0, srcLng);
         float yPos = 0;
         float zPos = getLocationDistance(destLat, 0, srcLat, 0);
+
+        return new Vector3(xPos, yPos, zPos);
+    }
+
+    // The function that returns real distance between two position by Haversine formula
+    public float getLocationDistance(float srcLat, float srcLng) {
+        // Haversine formula
+        // [ref] https://en.wikipedia.org/wiki/Haversine_formula
+        float currLatitude = Input.location.lastData.latitude;
+        float currLongitude = Input.location.lastData.longitude;
+
+        float earthRadius = 6371f;
+
+        float lat1 = currLatitude * Mathf.Deg2Rad;
+        float lng1 = currLongitude * Mathf.Deg2Rad;
+
+        float lat2 = srcLat * Mathf.Deg2Rad;
+        float lng2 = srcLng * Mathf.Deg2Rad;
+
+        float deltaLat = lat2 - lat1;
+        float deltaLng = lng2 - lng1;
+
+        float hav = Mathf.Sin(deltaLat / 2) * Mathf.Sin(deltaLat / 2)
+            + Mathf.Cos(lat1) * Mathf.Cos(lat2) * Mathf.Sin(deltaLng / 2) * Mathf.Sin(deltaLng / 2);
+        float dist = 2 * earthRadius * Mathf.Atan2(Mathf.Sqrt(hav), Mathf.Sqrt(1 - hav));
+
+        return dist;
+    }
+
+    // The function that returns psuedo position for unity coordinate by Haversine formula
+    public Vector3 getRelativePosition(float srcLat, float srcLng) {
+        float xPos = getLocationDistance(0, srcLng);
+        float yPos = 0;
+        float zPos = getLocationDistance(srcLat, 0);
 
         return new Vector3(xPos, yPos, zPos);
     }
