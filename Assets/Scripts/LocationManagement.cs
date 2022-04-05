@@ -47,9 +47,12 @@ public class LocationManagement : MonoBehaviour {
     void Update() {
         // gps 기능이 시작되었따면, 위도, 경도, 고도, 정확도, 정보를 얻은 시간을 각각 출력
         if(gpsStarted) {
+            float currLatitude = Input.location.lastData.latitude;
+            float currLongitude = Input.location.lastData.longitude;
+
             LocationText.GetComponent<Text>().text = string.Format(
                 "<b>Latitude</b> : {0:F6}\n<b>Longitude</b> : {1:F6}",
-                Input.location.lastData.latitude, Input.location.lastData.longitude
+                currLatitude, currLongitude
             );
 
             /*
@@ -59,6 +62,13 @@ public class LocationManagement : MonoBehaviour {
                 " " + Input.location.lastData.horizontalAccuracy +
                 " " + Input.location.lastData.timestamp);
             */
+
+            // 위도 경도 각각 1도당 111km이므로, 약 1m 당 0.00001도가 된다.
+            Camera.main.transform.position = new Vector3(
+                    getLocationDistance(0, 0, 0, currLongitude),
+                    0,
+                    getLocationDistance(0, 0, currLatitude, 0)
+                ) * 10000;
         }
     }
 
@@ -70,16 +80,16 @@ public class LocationManagement : MonoBehaviour {
         }
     }
 
-    public float getLocationDistance(float lat, float lng) {
+    public float getLocationDistance(float destLat, float destLng, float srcLat, float srcLng) {
         // Haversine formula
         // [ref] https://en.wikipedia.org/wiki/Haversine_formula
         float earthRadius = 6371f;
 
-        float lat1 = Input.location.lastData.latitude * Mathf.Deg2Rad;
-        float lng1 = Input.location.lastData.longitude * Mathf.Deg2Rad;
+        float lat1 = destLat * Mathf.Deg2Rad;
+        float lng1 = destLng * Mathf.Deg2Rad;
 
-        float lat2 = lat * Mathf.Deg2Rad;
-        float lng2 = lng * Mathf.Deg2Rad;
+        float lat2 = srcLat * Mathf.Deg2Rad;
+        float lng2 = srcLng * Mathf.Deg2Rad;
 
         float deltaLat = lat2 - lat1;
         float deltaLng = lng2 - lng1;
