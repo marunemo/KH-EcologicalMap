@@ -554,6 +554,7 @@ GameObject:
   - component: {fileID: 839466773}
   - component: {fileID: 839466772}
   - component: {fileID: 839466774}
+  - component: {fileID: 839466775}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -602,6 +603,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupPrefab: {fileID: 8994424175297114849, guid: e57e7c46821ea9249850a9151b618065, type: 3}
   canvas: {fileID: 1413353723}
+--- !u!114 &839466775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839466771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324ca945a1192274885f9a014fe6274e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AROriginMaster: {fileID: 305446700}
+  Cube: {fileID: 1441730815338617065, guid: e40337e3123e68444b793a197086dc70, type: 3}
 --- !u!1 &938685758
 GameObject:
   m_ObjectHideFlags: 0

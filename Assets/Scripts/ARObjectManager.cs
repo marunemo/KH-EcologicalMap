@@ -24,8 +24,13 @@ public class ARObjectManager : MonoBehaviour {
     void Start() {
         objectList.Add(new ARObject(35.981264f, 126.675968f, "Cube"));
 
+
         foreach(ARObject obj in objectList) {
-            Instantiate(Cube,
+            GameObject objPrefab = Resources.Load<GameObject>("Prefabs/" + obj.prefabName);
+            if(objPrefab == null) continue;
+
+            Instantiate(
+                    objPrefab,
                     this.GetComponent<LocationManagement>().getRelativePosition(0, 0, obj.latitude, obj.longitude),
                     Quaternion.identity,
                     AROriginMaster.transform
