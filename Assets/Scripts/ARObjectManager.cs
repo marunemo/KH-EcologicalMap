@@ -15,13 +15,16 @@ class ARObject {
 }
 
 public class ARObjectManager : MonoBehaviour {
+    private LocationManagement LocationComponent = null;
     private List<ARObject> objectList = new List<ARObject>();
+    private Dictionary<string, GameObject> prefabMap = new Dictionary<string, GameObject>();
 
     public GameObject AROriginMaster = null;
-    public GameObject Cube = null;
 
     // Start is called before the first frame update
     void Start() {
+        LocationComponent = this.GetComponent<LocationManagement>();
+
         objectList.Add(new ARObject(35.981264f, 126.675968f, "Cube"));
 
         foreach(ARObject obj in objectList) {
@@ -29,17 +32,30 @@ public class ARObjectManager : MonoBehaviour {
             if(objPrefab == null) continue;
 
             // 1' = 111km (<=> 1m = 0.00001')
-            Instantiate(
+            GameObject prefabObject = Instantiate(
                     objPrefab,
-                    this.GetComponent<LocationManagement>().getRelativePosition(obj.latitude, obj.longitude) * 10000,
+                    LocationComponent.getRelativePosition(obj.latitude, obj.longitude) * 10000,
                     Quaternion.identity,
                     AROriginMaster.transform
-                ).SetActive(false);
+                );
+            prefabObject.name = obj.prefabName;
+            prefabObject.SetActive(false);
+            prefabMap.Add(obj.prefabName, prefabObject);
         }
     }
 
     // Update is called once per frame
     void Update() {
-        
+        foreach(ARObject obj in objectList) {
+            // if distance of AR object within 10 meter
+            if(LocationComponent.getLocationDistance(obj.latitude, obj.longitude) <= 0.01f) {
+                if(prefabMap.ContainsKey(obj.prefabName) && !prefabMap[obj.prefabName].activeSelf)
+                    prefabMap[obj.prefabName].SetActive(true);
+            }
+            else {
+                if(prefabMap.ContainsKey(obj.prefabName) && prefabMap[obj.prefabName].activeSelf)
+                    prefabMap[obj.prefabName].SetActive(false);
+            }
+        }
     }
 }
