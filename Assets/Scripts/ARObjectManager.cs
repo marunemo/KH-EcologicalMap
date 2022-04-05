@@ -15,21 +15,24 @@ class ARObject {
 }
 
 public class ARObjectManager : MonoBehaviour {
-    private List<ARObject> objectList;
+    private List<ARObject> objectList = new List<ARObject>();
+
+    public GameObject Cube = null;
 
     // Start is called before the first frame update
     void Start() {
-        ARObject temp = new ARObject(35.981264f, 126.675968f, "Cube");
-        objectList.Add(temp);
+        objectList.Add(new ARObject(35.981264f, 126.675968f, "Cube"));
+
+        foreach(ARObject obj in objectList) {
+            Instantiate(Cube,
+                    this.GetComponent<LocationManagement>().getRelativePosition(0, 0, obj.latitude, obj.longitude),
+                    Quaternion.identity
+                ).SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update() {
-        foreach(ARObject obj in objectList) {
-            // if object position is within 100 meter
-            if((this.GetComponent<LocationManagement>().getLocationDistance(obj.latitude, obj.longitude) < 0.1f)) {
-
-            }
-        }
+        
     }
 }
