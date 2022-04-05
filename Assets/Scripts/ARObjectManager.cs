@@ -17,6 +17,7 @@ class ARObject {
 public class ARObjectManager : MonoBehaviour {
     private List<ARObject> objectList = new List<ARObject>();
 
+    public GameObject AROriginMaster = null;
     public GameObject Cube = null;
 
     // Start is called before the first frame update
@@ -26,7 +27,8 @@ public class ARObjectManager : MonoBehaviour {
         foreach(ARObject obj in objectList) {
             Instantiate(Cube,
                     this.GetComponent<LocationManagement>().getRelativePosition(0, 0, obj.latitude, obj.longitude),
-                    Quaternion.identity
+                    Quaternion.identity,
+                    AROriginMaster.transform
                 ).SetActive(false);
         }
     }
