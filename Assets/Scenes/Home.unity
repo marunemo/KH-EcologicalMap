@@ -616,7 +616,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AROriginMaster: {fileID: 305446700}
-  Cube: {fileID: 1441730815338617065, guid: e40337e3123e68444b793a197086dc70, type: 3}
 --- !u!1 &938685758
 GameObject:
   m_ObjectHideFlags: 0
