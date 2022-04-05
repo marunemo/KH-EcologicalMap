@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 class ARObject {
     public float latitude;
     public float longitude;
@@ -14,18 +15,30 @@ class ARObject {
     }
 }
 
+[System.Serializable]
+class ARObjectArray {
+    public ARObject[] objectData;
+}
+
 public class ARObjectManager : MonoBehaviour {
     private LocationManagement LocationComponent = null;
     private List<ARObject> objectList = new List<ARObject>();
     private Dictionary<string, GameObject> prefabMap = new Dictionary<string, GameObject>();
 
     public GameObject AROriginMaster = null;
+    public string jsonFileName = "LocationData";
 
     // Start is called before the first frame update
     void Start() {
         LocationComponent = this.GetComponent<LocationManagement>();
 
-        objectList.Add(new ARObject(35.981264f, 126.675968f, "Cube"));
+        TextAsset jsonFile = Resources.Load("Storage/" + jsonFileName) as TextAsset;
+        if(jsonFile != null) {
+            ARObjectArray ARObjects = JsonUtility.FromJson<ARObjectArray>(jsonFile.ToString());
+            foreach(ARObject arObj in ARObjects.objectData) {
+                objectList.Add(arObj);
+            }
+        }
 
         foreach(ARObject obj in objectList) {
             GameObject objPrefab = Resources.Load<GameObject>("Prefabs/" + obj.prefabName);
