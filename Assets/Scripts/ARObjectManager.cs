@@ -26,6 +26,7 @@ public class ARObjectManager : MonoBehaviour {
     private Dictionary<string, GameObject> prefabMap = new Dictionary<string, GameObject>();
 
     public GameObject AROriginMaster = null;
+    public GameObject DistanceText = null;
     public string jsonFileName = "LocationData";
 
     // Start is called before the first frame update
@@ -52,13 +53,23 @@ public class ARObjectManager : MonoBehaviour {
                     AROriginMaster.transform
                 );
             prefabObject.name = obj.prefabName;
-            prefabObject.SetActive(false);
+            //prefabObject.SetActive(false);
             prefabMap.Add(obj.prefabName, prefabObject);
+
+            Instantiate(
+                    DistanceText,
+                    prefabObject.transform.position + new Vector3(0, 1.5f, 0),
+                    Quaternion.identity,
+                    prefabObject.transform
+                )
+                .GetComponent<LocationTextBehavior>()
+                .setCoordinate(obj.latitude, obj.longitude);
         }
     }
 
     // Update is called once per frame
     void Update() {
+        /*
         foreach(ARObject obj in objectList) {
             // if distance of AR object within 20 meter
             if(LocationComponent.getLocationDistance(obj.latitude, obj.longitude) <= 0.02f) {
@@ -70,5 +81,6 @@ public class ARObjectManager : MonoBehaviour {
                     prefabMap[obj.prefabName].SetActive(false);
             }
         }
+        */
     }
 }

@@ -616,6 +616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AROriginMaster: {fileID: 305446700}
+  DistanceText: {fileID: 1424498753156600243, guid: 784cee9d808de85489069aa73ebe1461, type: 3}
+  jsonFileName: LocationData
 --- !u!1 &938685758
 GameObject:
   m_ObjectHideFlags: 0
