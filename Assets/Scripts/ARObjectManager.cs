@@ -55,7 +55,7 @@ public class ARObjectManager : MonoBehaviour {
                 );
 
             prefabObject.name = obj.prefabName;
-            prefabObject.SetActive(false);
+            //prefabObject.SetActive(false);
             prefabMap.Add(obj.prefabName, prefabObject);
 
             Instantiate(
@@ -72,6 +72,7 @@ public class ARObjectManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         foreach(ARObject obj in objectList) {
+            /*
             // if distance of AR object within 20 meter
             if(LocationComponent.getLocationDistance(obj.latitude, obj.longitude) <= 0.02f) {
                 if(prefabMap.ContainsKey(obj.prefabName) && !prefabMap[obj.prefabName].activeSelf)
@@ -81,6 +82,7 @@ public class ARObjectManager : MonoBehaviour {
                 if(prefabMap.ContainsKey(obj.prefabName) && prefabMap[obj.prefabName].activeSelf)
                     prefabMap[obj.prefabName].SetActive(false);
             }
+            */
         }
     }
 }
