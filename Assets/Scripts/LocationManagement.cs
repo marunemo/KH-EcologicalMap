@@ -11,6 +11,7 @@ public class LocationManagement : MonoBehaviour {
 
     // Start is called before the first frame update
     IEnumerator Start() {
+        Debug.Log("Location");
         // 만약 유저가 gps 기능을 사용하지 않는다면 종료
         if(!Input.location.isEnabledByUser) {
             Debug.Log("Gps permission is denied");
@@ -39,8 +40,9 @@ public class LocationManagement : MonoBehaviour {
             yield break;
         }
 
-        // 만약 대기 시간 내에 시작하는 데에 성공했다면, gps 위치 기능 시작
+        // 만약 대기 시간 내에 시작하는 데에 성공했다면, gps 위치 기능 시작 및 오브젝트 생성
         gpsStarted = true;
+        this.GetComponent<ARObjectManager>().enabled = true;
     }
 
     // Update is called once per frame

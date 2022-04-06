@@ -17,7 +17,7 @@ public class LocationTextBehavior : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        textMesh.text = (gameManager.GetComponent<LocationManagement>().getLocationDistance(latitude, longitude) * 100000).ToString() + "m";
+        textMesh.text = (gameManager.GetComponent<LocationManagement>().getLocationDistance(latitude, longitude) * 10000).ToString() + "m";
     }
 
     public void setCoordinate(float lat, float lng) {

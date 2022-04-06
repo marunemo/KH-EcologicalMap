@@ -31,6 +31,7 @@ public class ARObjectManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        Debug.Log("AR");
         LocationComponent = this.GetComponent<LocationManagement>();
 
         TextAsset jsonFile = Resources.Load("Storage/" + jsonFileName) as TextAsset;
