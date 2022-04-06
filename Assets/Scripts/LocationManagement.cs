@@ -45,6 +45,8 @@ public class LocationManagement : MonoBehaviour {
 
         // 만약 대기 시간 내에 시작하는 데에 성공했다면, gps 위치 기능 시작 및 오브젝트 생성
         gpsStarted = true;
+        currLatitude = Input.location.lastData.latitude;
+        currLongitude = Input.location.lastData.longitude;
         this.GetComponent<ARObjectManager>().enabled = true;
     }
 
