@@ -108,13 +108,8 @@ public class LocationManagement : MonoBehaviour {
     public float getLocationDistance(float srcLat, float srcLng) {
         // Haversine formula
         // [ref] https://en.wikipedia.org/wiki/Haversine_formula
-#if UNITY_EDITOR
-        float currLatitude = 35.981265f;
-        float currLongitude = 126.675996f;
-#else
         float currLatitude = Input.location.lastData.latitude;
         float currLongitude = Input.location.lastData.longitude;
-#endif
 
         float earthRadius = 6371f;
 
@@ -136,13 +131,8 @@ public class LocationManagement : MonoBehaviour {
 
     // The function that returns psuedo position for unity coordinate depending on current location by Haversine formula
     public Vector3 getRelativePosition(float srcLat, float srcLng) {
-#if UNITY_EDITOR
-        float destLat = 35.981265f;
-        float destLng = 126.675996f;
-#else
         float destLat = Input.location.lastData.latitude;
         float destLng = Input.location.lastData.longitude;
-#endif
 
         return getRelativePosition(destLat, destLng, srcLat, srcLng);
     }
