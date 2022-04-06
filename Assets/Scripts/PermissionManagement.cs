@@ -10,14 +10,10 @@ public class PermissionManagement : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        // Camera Permission for android
-        if(!Permission.HasUserAuthorizedPermission(Permission.Camera)) {
-            Permission.RequestUserPermission(Permission.Camera);
-        }
-
-        // Location Permission for android
-        if(!Permission.HasUserAuthorizedPermission(Permission.FineLocation)) {
-            Permission.RequestUserPermission(Permission.FineLocation);
+        // Camera and Location Permission for android
+        if(!(Permission.HasUserAuthorizedPermission(Permission.Camera) && Permission.HasUserAuthorizedPermission(Permission.FineLocation))) {
+            string[] permissions = { Permission.Camera, Permission.FineLocation };
+            Permission.RequestUserPermissions(permissions);
         }
 
         // Permission denied message

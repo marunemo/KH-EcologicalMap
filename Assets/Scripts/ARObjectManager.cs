@@ -60,8 +60,8 @@ public class ARObjectManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         foreach(ARObject obj in objectList) {
-            // if distance of AR object within 10 meter
-            if(LocationComponent.getLocationDistance(obj.latitude, obj.longitude) <= 0.01f) {
+            // if distance of AR object within 20 meter
+            if(LocationComponent.getLocationDistance(obj.latitude, obj.longitude) <= 0.02f) {
                 if(prefabMap.ContainsKey(obj.prefabName) && !prefabMap[obj.prefabName].activeSelf)
                     prefabMap[obj.prefabName].SetActive(true);
             }
