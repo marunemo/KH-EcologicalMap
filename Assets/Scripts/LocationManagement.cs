@@ -9,6 +9,9 @@ public class LocationManagement : MonoBehaviour {
 
     private bool gpsStarted = false;
 
+    private float currLatitude = 0;
+    private float currLongitude = 0;
+
     // Start is called before the first frame update
     IEnumerator Start() {
         Debug.Log("Location");
@@ -49,8 +52,7 @@ public class LocationManagement : MonoBehaviour {
     void Update() {
         // gps 기능이 시작되었따면, 위도, 경도, 고도, 정확도, 정보를 얻은 시간을 각각 출력
         if(gpsStarted) {
-            float currLatitude = Input.location.lastData.latitude;
-            float currLongitude = Input.location.lastData.longitude;
+            StartCoroutine(refreshLocation());
 
             LocationText.GetComponent<Text>().text = string.Format(
                 "<b>Latitude</b> : {0:F6}\n<b>Longitude</b> : {1:F6}",
@@ -110,9 +112,6 @@ public class LocationManagement : MonoBehaviour {
     public float getLocationDistance(float srcLat, float srcLng) {
         // Haversine formula
         // [ref] https://en.wikipedia.org/wiki/Haversine_formula
-        float currLatitude = Input.location.lastData.latitude;
-        float currLongitude = Input.location.lastData.longitude;
-
         float earthRadius = 6371f;
 
         float lat1 = currLatitude * Mathf.Deg2Rad;
@@ -133,9 +132,17 @@ public class LocationManagement : MonoBehaviour {
 
     // The function that returns psuedo position for unity coordinate depending on current location by Haversine formula
     public Vector3 getRelativePosition(float srcLat, float srcLng) {
-        float destLat = Input.location.lastData.latitude;
-        float destLng = Input.location.lastData.longitude;
+        float destLat = currLatitude;
+        float destLng = currLongitude;
 
         return getRelativePosition(destLat, destLng, srcLat, srcLng);
+    }
+
+    private IEnumerator refreshLocation() {
+        while(true) {
+            currLatitude = Input.location.lastData.latitude;
+            currLongitude = Input.location.lastData.longitude;
+            yield return new WaitForSeconds(0.33f);
+        }
     }
 }
