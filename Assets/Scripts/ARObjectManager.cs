@@ -52,6 +52,7 @@ public class ARObjectManager : MonoBehaviour {
                     Quaternion.identity,
                     AROriginMaster.transform
                 );
+
             prefabObject.name = obj.prefabName;
             //prefabObject.SetActive(false);
             prefabMap.Add(obj.prefabName, prefabObject);

@@ -104,7 +104,7 @@ public class LocationManagement : MonoBehaviour {
         return new Vector3(xPos, yPos, zPos);
     }
 
-    // The function that returns real distance between two position by Haversine formula
+    // The function that returns real distance from current position by Haversine formula
     public float getLocationDistance(float srcLat, float srcLng) {
         // Haversine formula
         // [ref] https://en.wikipedia.org/wiki/Haversine_formula
@@ -129,12 +129,11 @@ public class LocationManagement : MonoBehaviour {
         return dist;
     }
 
-    // The function that returns psuedo position for unity coordinate by Haversine formula
+    // The function that returns psuedo position for unity coordinate depending on current location by Haversine formula
     public Vector3 getRelativePosition(float srcLat, float srcLng) {
-        float xPos = getLocationDistance(0, srcLng);
-        float yPos = 0;
-        float zPos = getLocationDistance(srcLat, 0);
+        float destLat = Input.location.lastData.latitude;
+        float destLng = Input.location.lastData.longitude;
 
-        return new Vector3(xPos, yPos, zPos);
+        return getRelativePosition(destLat, destLng, srcLat, srcLng);
     }
 }
