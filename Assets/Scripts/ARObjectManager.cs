@@ -46,10 +46,10 @@ public class ARObjectManager : MonoBehaviour {
             GameObject objPrefab = Resources.Load<GameObject>("Prefabs/" + obj.prefabName);
             if(objPrefab == null) continue;
 
-            // 1' = 111km (<=> 1m = 0.00001')
+            // Since getRelativePosition(Haversine formula) use km units, multiply 1000 to calculate by meters(1 point in unity coordinate)
             GameObject prefabObject = Instantiate(
                     objPrefab,
-                    LocationComponent.getRelativePosition(obj.latitude, obj.longitude) * 10000,
+                    LocationComponent.getRelativePosition(obj.latitude, obj.longitude) * 1000,
                     Quaternion.identity,
                     AROriginMaster.transform
                 );

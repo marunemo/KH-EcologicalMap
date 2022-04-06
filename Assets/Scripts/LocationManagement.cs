@@ -83,7 +83,7 @@ public class LocationManagement : MonoBehaviour {
     public float getLocationDistance(float destLat, float destLng, float srcLat, float srcLng) {
         // Haversine formula
         // [ref] https://en.wikipedia.org/wiki/Haversine_formula
-        float earthRadius = 6371f;
+        float earthRadius = 6371f; // km
 
         float lat1 = destLat * Mathf.Deg2Rad;
         float lng1 = destLng * Mathf.Deg2Rad;
@@ -114,7 +114,7 @@ public class LocationManagement : MonoBehaviour {
     public float getLocationDistance(float srcLat, float srcLng) {
         // Haversine formula
         // [ref] https://en.wikipedia.org/wiki/Haversine_formula
-        float earthRadius = 6371f;
+        float earthRadius = 6371f; // km
 
         float lat1 = currLatitude * Mathf.Deg2Rad;
         float lng1 = currLongitude * Mathf.Deg2Rad;
