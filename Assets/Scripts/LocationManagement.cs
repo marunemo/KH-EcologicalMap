@@ -68,7 +68,7 @@ public class LocationManagement : MonoBehaviour {
             if(!objectsActivated) {
                 if(northAngle != 0f) {
                     this.GetComponent<ARObjectManager>().enabled = true;
-                    this.GetComponent<ARObjectManager>().northAngle = northAngle;
+                    this.GetComponent<ARObjectManager>().northAngle = northAngle * 360;
                     objectsActivated = !objectsActivated;
                 }
             }

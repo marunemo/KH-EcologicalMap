@@ -21,7 +21,7 @@ public class TempPositionMng : MonoBehaviour
         for(int i = 0; i < transform.childCount; i++) {
             Transform child = this.transform.GetChild(i);
             result += "" + child.name + " : " + child.position.x + ", " + child.position.z + "\n";
-            result += child.rotation.ToString() + "\n";
+            result += "(" + child.transform.rotation.x + ", " + child.transform.rotation.y + ", " + child.transform.rotation.z + ")";
         }
         text.text = result;
     }
