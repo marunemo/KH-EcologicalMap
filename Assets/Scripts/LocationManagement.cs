@@ -25,6 +25,7 @@ public class LocationManagement : MonoBehaviour {
 
         // gps 위치 기능 시작
         Input.location.Start();
+        Input.compass.enabled = true;
 
         // 위치 서비스 기능이 시작될 때까지 대기(최대 20초)
         int maxWait = 20;
@@ -45,8 +46,9 @@ public class LocationManagement : MonoBehaviour {
             yield break;
         }
 
-        // 만약 대기 시간 내에 시작하는 데에 성공했다면, gps 위치 기능 시작 및 오브젝트 생성
+        // 만약 대기 시간 내에 시작하는 데에 성공했다면, gps 위치 기능 시작
         gpsStarted = true;
+
         currLatitude = Input.location.lastData.latitude;
         currLongitude = Input.location.lastData.longitude;
         northAngle = Input.compass.trueHeading;
@@ -66,6 +68,7 @@ public class LocationManagement : MonoBehaviour {
             if(!objectsActivated) {
                 if(northAngle != 0f) {
                     this.GetComponent<ARObjectManager>().enabled = true;
+                    this.GetComponent<ARObjectManager>().northAngle = northAngle;
                     objectsActivated = !objectsActivated;
                 }
             }
@@ -153,8 +156,7 @@ public class LocationManagement : MonoBehaviour {
         while(true) {
             currLatitude = Input.location.lastData.latitude;
             currLongitude = Input.location.lastData.longitude;
-            if(Input.compass.headingAccuracy > 0f)
-                northAngle = Input.compass.trueHeading;
+            northAngle = Input.compass.trueHeading;
             yield return new WaitForSeconds(0.33f);
         }
     }
