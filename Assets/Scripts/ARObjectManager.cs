@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 [System.Serializable]
 class ARObject {
@@ -28,6 +29,7 @@ public class ARObjectManager : MonoBehaviour {
     public GameObject AROriginMaster = null;
     public GameObject DistanceText = null;
     public string jsonFileName = "LocationData";
+    public float northAngle = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -42,6 +44,11 @@ public class ARObjectManager : MonoBehaviour {
             }
         }
 
+        GameObject ARCoordinate = new GameObject("AR Coordinate");
+        ARCoordinate.transform.SetParent(AROriginMaster.transform);
+        ARCoordinate.transform.position = Vector3.zero;
+        ARCoordinate.transform.rotation = Quaternion.Euler(0, -1 * northAngle, 0);
+
         foreach(ARObject obj in objectList) {
             GameObject objPrefab = Resources.Load<GameObject>("Prefabs/" + obj.prefabName);
             if(objPrefab == null) continue;
@@ -49,11 +56,9 @@ public class ARObjectManager : MonoBehaviour {
             // Since getRelativePosition(Haversine formula) use km units, multiply 1000 to calculate by meters(1 point in unity coordinate)
             GameObject prefabObject = Instantiate(
                     objPrefab,
-                    LocationComponent.getRelativePosition(obj.latitude, obj.longitude) * 1000,
-                    Quaternion.identity,
-                    AROriginMaster.transform
+                    ARCoordinate.transform
                 );
-
+            prefabObject.transform.localPosition = LocationComponent.getRelativePosition(obj.latitude, obj.longitude) * 1000;
             prefabObject.name = obj.prefabName;
             //prefabObject.SetActive(false);
             prefabMap.Add(obj.prefabName, prefabObject);
@@ -67,6 +72,8 @@ public class ARObjectManager : MonoBehaviour {
                 .GetComponent<LocationTextBehavior>()
                 .setCoordinate(obj.latitude, obj.longitude);
         }
+
+        // AROriginMaster.GetComponent<ARSessionOrigin>().MakeContentAppearAt(ARCoordinate.transform, ARCoordinate.transform.position, ARCoordinate.transform.rotation);
     }
 
     // Update is called once per frame

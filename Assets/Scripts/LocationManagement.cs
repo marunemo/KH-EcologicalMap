@@ -8,9 +8,11 @@ public class LocationManagement : MonoBehaviour {
     public GameObject LocationText = null;
 
     private bool gpsStarted = false;
+    private bool objectsActivated = false;
 
     private float currLatitude = 0;
     private float currLongitude = 0;
+    private float northAngle = 0;
 
     // Start is called before the first frame update
     IEnumerator Start() {
@@ -47,7 +49,7 @@ public class LocationManagement : MonoBehaviour {
         gpsStarted = true;
         currLatitude = Input.location.lastData.latitude;
         currLongitude = Input.location.lastData.longitude;
-        this.GetComponent<ARObjectManager>().enabled = true;
+        northAngle = Input.compass.trueHeading;
     }
 
     // Update is called once per frame
@@ -60,6 +62,13 @@ public class LocationManagement : MonoBehaviour {
                 "<b>Latitude</b> : {0:F6}\n<b>Longitude</b> : {1:F6}",
                 currLatitude, currLongitude
             );
+
+            if(!objectsActivated) {
+                if(northAngle != 0f) {
+                    this.GetComponent<ARObjectManager>().enabled = true;
+                    objectsActivated = !objectsActivated;
+                }
+            }
 
             /*
             Debug.Log("Location: " + Input.location.lastData.latitude +
@@ -144,6 +153,8 @@ public class LocationManagement : MonoBehaviour {
         while(true) {
             currLatitude = Input.location.lastData.latitude;
             currLongitude = Input.location.lastData.longitude;
+            if(Input.compass.headingAccuracy > 0f)
+                northAngle = Input.compass.trueHeading;
             yield return new WaitForSeconds(0.33f);
         }
     }
