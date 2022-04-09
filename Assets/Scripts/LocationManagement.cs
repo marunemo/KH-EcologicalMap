@@ -68,7 +68,15 @@ public class LocationManagement : MonoBehaviour {
             if(!objectsActivated) {
                 if(northAngle != 0f) {
                     this.GetComponent<ARObjectManager>().enabled = true;
-                    this.GetComponent<ARObjectManager>().northAngle = northAngle * 360;
+
+                    // 참고[https://stackoverflow.com/questions/50963881/get-unity-compass-true-north-heading]
+                    float xRotation = Mathf.Atan2(Input.acceleration.z, Input.acceleration.y);
+                    float yzMagnitude = Mathf.Sqrt(Mathf.Pow(Input.acceleration.y, 2) + Mathf.Pow(Input.acceleration.z, 2));
+                    float zRotation = Mathf.Atan2(Input.acceleration.x, yzMagnitude);
+
+                    float xangle = xRotation * (180 / Mathf.PI) + 90;
+                    float zangle = -zRotation * (180 / Mathf.PI);
+                    this.GetComponent<ARObjectManager>().northAngle = new Vector3(xangle, 0, zangle - northAngle);
                     objectsActivated = !objectsActivated;
                 }
             }

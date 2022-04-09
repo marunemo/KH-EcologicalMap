@@ -29,7 +29,7 @@ public class ARObjectManager : MonoBehaviour {
     public GameObject AROriginMaster = null;
     public GameObject DistanceText = null;
     public string jsonFileName = "LocationData";
-    public float northAngle = 0;
+    public Vector3 northAngle = Vector3.zero;
 
     // Start is called before the first frame update
     void Start() {
@@ -47,7 +47,8 @@ public class ARObjectManager : MonoBehaviour {
         GameObject ARCoordinate = new GameObject("AR Coordinate");
         ARCoordinate.transform.SetParent(AROriginMaster.transform);
         ARCoordinate.transform.position = Vector3.zero;
-        ARCoordinate.transform.rotation = Quaternion.Euler(0, -1 * northAngle, 0);
+        ARCoordinate.transform.eulerAngles = northAngle;
+        ARCoordinate.transform.rotation = Quaternion.Euler(0, ARCoordinate.transform.rotation.y, 0);
 
         foreach(ARObject obj in objectList) {
             GameObject objPrefab = Resources.Load<GameObject>("Prefabs/" + obj.prefabName);
