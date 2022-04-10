@@ -48,7 +48,7 @@ public class ARObjectManager : MonoBehaviour {
         ARCoordinate.transform.SetParent(AROriginMaster.transform);
         ARCoordinate.transform.position = Vector3.zero;
         ARCoordinate.transform.eulerAngles = northAngle;
-        ARCoordinate.transform.rotation = Quaternion.Euler(0, ARCoordinate.transform.rotation.y, 0);
+        ARCoordinate.transform.rotation = Quaternion.Euler(0, ARCoordinate.transform.eulerAngles.y, 0);
 
         foreach(ARObject obj in objectList) {
             GameObject objPrefab = Resources.Load<GameObject>("Prefabs/" + obj.prefabName);

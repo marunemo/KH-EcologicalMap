@@ -74,9 +74,9 @@ public class LocationManagement : MonoBehaviour {
                     float yzMagnitude = Mathf.Sqrt(Mathf.Pow(Input.acceleration.y, 2) + Mathf.Pow(Input.acceleration.z, 2));
                     float zRotation = Mathf.Atan2(Input.acceleration.x, yzMagnitude);
 
-                    float xangle = xRotation * (180 / Mathf.PI) + 90;
-                    float zangle = -zRotation * (180 / Mathf.PI);
-                    this.GetComponent<ARObjectManager>().northAngle = new Vector3(xangle, 0, zangle - northAngle);
+                    float xAngle = xRotation * (180 / Mathf.PI) + 90;
+                    float zAngle = -zRotation * (180 / Mathf.PI);
+                    this.GetComponent<ARObjectManager>().northAngle = new Vector3(xAngle, 0, zAngle - northAngle);
                     objectsActivated = !objectsActivated;
                 }
             }
